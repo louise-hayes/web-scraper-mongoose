@@ -11,29 +11,84 @@ $(document).ready(() => {
     $('.create-note').on('click', function () {
         console.log("in create note");
         $('#newNote').modal('open');
-        // var id = $(this).data("id");
-        var id = "5a7bd1a4f5ad3721db121be2";
+
+        $('#saveNote').on('click', function () {
+
+            console.log("in save note");
+
+            // $('#newNote').modal('open');
+            var id = $(this).data("id");
+            // var id = "5a7bd1a4f5ad3721db121be2";
+            const note = {};
+            note.title = $('#note-title').val().trim();
+            note.body = $('#note-body').val().trim();
+
+            console.log("NEW NOTE\n");
+            console.log(note);
+
+
+            $.ajax({
+                    method: "POST",
+                    url: "/articles/" + id,
+                    data: note
+                })
+                .done(function () {
+                    //update elements without reloading page
+
+                    $('#note-title').val(note.title);
+                    $('#note-body').val(note.body);
+                    Materialize.toast('Note Saved!', 4000)
+
+                });
+        });
     });
-    //EDIT Note to do 
-    // $(".edit-note").on('click', function () {
-    //     var id = $(this).data("id");
 
-    //     $.ajax({
-    //             method: "GET",
-    //             url: "/articles/" + id
-    //         })
-    //         .done(function (note) {
-    //             console.log("ARTICLE INFO\n\n" + JSON.stringify(article));
 
-    //             $('#note-title').val(note.title);
-    //             // $('#note-desc').val(note.summary);
 
-    //             //set global to allow for PUT save event
-    //             $('#modal1').modal('open');
+    // EDIT Note to do 
+    $(".note-see").on('click', function () {
+        var id = $(this).data("id");
+        console.log("note edit");
+        $.ajax({
+                method: "PUT",
+                url: "/notes/" + id
+            })
+            .done(function (note) {
+                console.log("NOTE INFO\n\n" + JSON.stringify(note));
 
-    //         });
-    // });
+                $('#note-title').val(note.title);
+                $('#note-body').val(note.body);
+                //set global to allow for PUT save event
+                $('#newNote').modal('open');
 
-    // delete note to do
+            });
+    });
+
+
+    //DELETE EVENT
+
+    $(".note-delete").on('click', function () {
+        var id = $(this).data("Id");
+        console.log("note-delete");
+        $.ajax({
+                method: "DELETE",
+                url: "/articles/" + id
+            })
+            .done(function (note) {
+                window.location.reload();
+                console.log("Article INFO\n\n" + JSON.stringify(note));
+            });
+
+    });
+
+    //View Note
+    $(".note-see").on('click', function () {
+        console.log("note-see");
+        var id = $(this).data("noteid");
+
+        // current base url address
+        window.location.href = window.location.origin + "/notes/" + id
+
+    });
 
 });

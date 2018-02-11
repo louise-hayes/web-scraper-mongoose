@@ -11,10 +11,25 @@ body-parser
 #to start
 run npm start
 
-#db 
+#db:Name webscrapermongoose
 Uses mongo db via mongoose
-to start db run mongo demon: mongod
-then in alternative terminal session run mongo or access via Robo 3T noSql DB GUI
+to start db run mongo demon in terminal/bash:> mongod
+then in alternative terminal session run mongo 
+You can also access via Robo 3T noSql DB GUI
+Remove DB: from mongo bash session: 
+use webscrapermongoose; 
+db.dropDatabase();
+DB is created auto on app start, from server.js command 
+mongoose.connect("mongodb://localhost/webscrapermongoose");
+
+#Collections:
+Article: 
+title
+link
+
+Note:
+title
+body
 
 #Github repo:
 https://github.com/louise-hayes/web-scraper-mongoose
