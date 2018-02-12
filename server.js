@@ -56,7 +56,7 @@ mongoose.Promise = Promise;
 // //   useMongoClient: true
 // });
 
-var dburi = "mongodb://louise:root1234@ds233208.mlab.com:33208/heroku_zllhn454";
+var dburi = "mongodb://localhost/webscrapermongoose";
 if (process.env.MONGODB_URI) {
     mongoose.connect(process.env.MONGODB_URI)
     .catch(function (err){
