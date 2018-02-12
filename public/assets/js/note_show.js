@@ -1,5 +1,5 @@
 $(document).ready(() => {
-    console.log("in article show")
+    console.log("in article show");
     $('.modal-trigger').hide(); //hiding 'New Article' button
     var id = $(this).data("id");
 
@@ -15,9 +15,8 @@ $(document).ready(() => {
         $('#saveNote').on('click', function () {
 
             console.log("in save note");
-
-            // $('#newNote').modal('open');
-            var id = $(this).data("id");
+//store id of article
+            var articleId = $(this).data("id");
             // var id = "5a7bd1a4f5ad3721db121be2";
             const note = {};
             note.title = $('#note-title').val().trim();
@@ -29,7 +28,7 @@ $(document).ready(() => {
 
             $.ajax({
                     method: "POST",
-                    url: "/articles/" + id,
+                    url: "/notes/" + articleId,
                     data: note
                 })
                 .done(function () {
@@ -37,6 +36,7 @@ $(document).ready(() => {
 
                     $('#note-title').val(note.title);
                     $('#note-body').val(note.body);
+                    window.location.reload();
                     Materialize.toast('Note Saved!', 4000)
 
                 });
@@ -45,12 +45,13 @@ $(document).ready(() => {
 
 
 
-    // EDIT Note to do 
+    // edit Note
     $(".note-see").on('click', function () {
         var id = $(this).data("id");
         console.log("note edit");
+
         $.ajax({
-                method: "PUT",
+                method: "GET",
                 url: "/notes/" + id
             })
             .done(function (note) {
@@ -58,8 +59,32 @@ $(document).ready(() => {
 
                 $('#note-title').val(note.title);
                 $('#note-body').val(note.body);
-                //set global to allow for PUT save event
+
                 $('#newNote').modal('open');
+                
+                $('#saveNote').on('click', function () {
+
+                    console.log("in edit save note");
+                    note.title = $('#note-title').val().trim();
+                    note.body = $('#note-body').val().trim();
+                    console.log("Edit NOTE\n");
+                    console.log(note);
+                    $.ajax({
+                            method: "PUT",
+                            url: "/notes/" + note._id,
+                            data: note
+                        })
+                        .done(function () {
+                            //update elements without reloading page
+        
+                            $('#note-title').val(note.title);
+                            $('#note-body').val(note.body);
+                            Materialize.toast('Note Saved!', 4000)
+                            window.location.reload();
+        
+                        });
+                });
+
 
             });
     });
@@ -68,26 +93,18 @@ $(document).ready(() => {
     //DELETE EVENT
 
     $(".note-delete").on('click', function () {
-        var id = $(this).data("Id");
+        var noteid = $(this).data("noteid");
+        var articleid = $(this).data("articleid");
+        
         console.log("note-delete");
         $.ajax({
                 method: "DELETE",
-                url: "/articles/" + id
+                url: "/notes/" + noteid + "/" + articleid
             })
             .done(function (note) {
                 window.location.reload();
                 console.log("Article INFO\n\n" + JSON.stringify(note));
             });
-
-    });
-
-    //View Note
-    $(".note-see").on('click', function () {
-        console.log("note-see");
-        var id = $(this).data("noteid");
-
-        // current base url address
-        window.location.href = window.location.origin + "/notes/" + id
 
     });
 

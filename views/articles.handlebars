@@ -2,11 +2,13 @@
 
 <div class="row">
     <div class="col s12">
-        <h1>All Articles Scraped
-            {{!-- <a style='margin-left: 40px;' href="#newEvent" class="btn-floating btn-large waves-effect modal-trigger add-event-btn">
-                <i class="material-icons add-event-btn">add</i>
-            </a> --}}
+        {{#if @root.saved}}
+        <h1>Articles Saved 
         </h1>
+        {{else}}
+        <h1>All Articles Scraped 
+        </h1>
+        {{/if}}
     </div>
 </div>
 <div class="row">
@@ -15,8 +17,8 @@
             <thead>
                 <tr>
                     <th scope="col">Article Title</th>
-                    {{!-- <th scope="col">Summary</th> --}}
                     <th scope="col">URL</th>
+                    <th scope="col">ID</th>
                     <th scope="col" colspan="2"></th>
                 </tr>
             </thead>
@@ -24,16 +26,18 @@
                 {{#each articles}}
                 <tr>
                     <td>{{title}}</td>
-                    <td>{{link}}</td>
+                    <td><a href='{{link}}'>{{link}}</a></td>
                     <td>{{id}}</td>
-                    {{!-- Show save button for each article which when cicked will show the single article view modal --}}
                     <td>
-                        <a id="events-eye-icon"class="see-article" data-id="{{id}}">
-                            <i class="link large material-icons see-article" style="font-size:36px">backup</i>
+                       {{#if @root.saved}}
+                        <a id="article-view" class="article-view" data-id="{{id}}" data-title="{{title}}" data-link="{{link}}">
+                            <i class="link large material-icons article-view" style="font-size:36px">info</i>
                         </a>
-                        {{!-- <a class="event-signup" data-id="{{id}}">
-                            <i class="link large material-icons signup-event" style="font-size:36px">group_add</i>
-                        </a> --}}
+                        {{else}}
+                        <a id="article-save" class="article-save" data-id="{{id}}" data-title="{{title}}" data-link="{{link}}">
+                            <i class="link large material-icons article-save" style="font-size:36px">backup</i>
+                        </a>
+                        {{/if}}
                     </td>
                 </tr>
                 {{/each}}

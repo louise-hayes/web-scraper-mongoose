@@ -38,6 +38,17 @@ app.engine('handlebars', exphbs({
     defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
+var saved;
+// hbs to test if article is saved will be used in articles.handlebars
+Handlebars.registerHelper("isSaved", function (saved) {
+    console.log("saved\n" + saved);
+    if (saved === true || saved === false) {
+        return true;
+    } else {
+        return false;
+    }
+});
+
 
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB

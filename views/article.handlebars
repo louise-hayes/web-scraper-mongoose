@@ -19,7 +19,7 @@
                             Article URL
                         </div>
                         <br>
-                        <div class="event-field" id="article-link"> {{article.link}}</div>
+                        <div class="event-field" id="article-link"> <a href='{{article.link}}'>{{article.link}}</a></div>
                     </div>
                 </div>
                 {{!--
@@ -66,10 +66,10 @@
                         <td class="event-td">{{body}}</td>
                         <td class="center">
                             <a class="note-see" data-id="{{id}}">
-                                <i class="link large material-icons see-user" data-id="{{id}}" style="font-size:36px">info_outline</i>
+                                <i class="link large material-icons see-user"  style="font-size:36px">info_outline</i>
                             </a>
-                            <a class="note-delete" data-id="{{id}}">
-                                <i class="link large material-icons remove-user" data-id="{{id}}" style="font-size:36px">delete</i>
+                            <a class="note-delete" data-noteid="{{id}}" data-articleid="{{@root.article.id}}">
+                                <i class="link large material-icons remove-user" style="font-size:36px">delete</i>
                             </a>
                         </td>
                     </tr>
@@ -84,4 +84,4 @@
 <!-- This is for the new note modal -->
 {{> note.create }}
 
-<script src="../assets/js/article_show.js"></script>
+<script src="../assets/js/note_show.js"></script>
