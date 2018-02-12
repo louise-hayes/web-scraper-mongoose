@@ -1,4 +1,3 @@
-
 var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
@@ -20,14 +19,17 @@ app.engine('handlebars', exphbs({
     defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 // Initialize Express
 
 // Configure middleware
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 // Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 // Use express.static to serve the public folder as a static directory
 //make all files available in Public folder
 app.use(express.static(path.join(__dirname, 'public')))
@@ -53,11 +55,19 @@ Handlebars.registerHelper("isSaved", function (saved) {
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/webscrapermongoose", {
-//   useMongoClient: true
-});
+// mongoose.connect("mongodb://localhost/webscrapermongoose", {
+// //   useMongoClient: true
+// });
+
+var dburi = "mongodb://localhost/webscrapermongoose";
+if (process.env.MONGODB_URI) {
+    mongoose.connect(process.env.MONGODB_URI);
+} else {
+    mongoose.connect(dburi);
+};
+
 
 // Start the server
-app.listen(PORT, function() {
-  console.log("App running on port " + PORT + "!");
+app.listen(PORT, function () {
+    console.log("App running on port " + PORT + "!");
 });
