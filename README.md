@@ -6,26 +6,35 @@ express-handlebars
 mongoose
 request
 cheerio
+axios
 body-parser
 
 #to start
-run npm start
+Need to start mongod and mongo as per below DB section
+DB is created from app if does not exist
+npm start
 
 #db:Name webscrapermongoose
-Uses mongo db via mongoose
-to start db run mongo demon in terminal/bash:> mongod
+Uses mongo db and mongoose
+Startdb: run mongo demon in a terminal session/bash session: mongod
 then in alternative terminal session run mongo 
 You can also access via Robo 3T noSql DB GUI
-Remove DB: from mongo bash session: 
+
+#To Remove DB: from mongo bash session: 
 use webscrapermongoose; 
 db.dropDatabase();
 DB is created auto on app start, from server.js command 
 mongoose.connect("mongodb://localhost/webscrapermongoose");
 
 #Collections:
-Article: 
+Scrape: (scraped articles)
 title
 link
+
+Article: (saved articles)
+title
+link
+notes (array of note id's associalted with this article)
 
 Note:
 title
@@ -34,30 +43,27 @@ body
 #Github repo:
 https://github.com/louise-hayes/web-scraper-mongoose
 #Heroku:
+https://techscrapermongoose.herokuapp.com/
 
 #what does the App do
 
-It scrapes a stock finance site yahoo.com/finance
-It present this info to user, allows them to edit, and saves their comment for all other users to see
+It scrapes a tech site https://thehackernews.com/
+It presents a list of articles to user, allows them to save specific articles, and allows notes to be added and edited for each saved article.
 
 The info scraped:
 - Headline - the title of the article
-- Summary - a short summary of the article
 - URL - the url to the original article
+
+#routes
+/scrape - scrape tech site and save articles in scrape table
+/scrapes - find all unsaved articles
+/articles - read all articles
+/notes/:id - find notes for that article
+/articles/:id - view / edit an article
+/notes/:noteid/:articleid - delete note from an article
 
 #Unit Tests
 To start :  npm test
-
-
-#aims of app (this section to be removed after golive)
-- Users should also be able to leave comments on the articles displayed and revisit them later. 
-- The comments should be saved to the database as well and associated with their articles. 
-- Users should also be able to delete comments left on articles. 
-- All stored comments should be visible to every user.
-- Go back to Saturday's activities if you need a refresher on how to partner one model with another.
-- Whenever you scrape a site for stories, make sure an article isn't already represented in your database before saving it; we don't want duplicates. 
-- Don't just clear out your database and populate it with scraped articles whenever a user accesses your site. 
-- If your app deletes stories every time someone visits, your users won't be able to see any comments except the ones that they post.
 
 #Helpful Links
 
